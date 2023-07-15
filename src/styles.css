@@ -1,0 +1,36 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.FileTree {
+  text-align: left;
+}
+
+.FTN-Label {
+  display: flex;
+  padding: 2px;
+}
+
+.FTN-Label-Icon {
+  transform: rotate(0);
+  transition: 0.5s ease;
+}
+
+.FTN-Label-Text {
+  margin-left: 0.5rem;
+}
+
+.FTN-Label-Icon.expanded {
+  transform: rotate(90deg);
+}
+
+.FTN-Children {
+  display: flex;
+}
+
+.FTN-Children-Left {
+  flex: 0 0 0px;
+  border-left: 1px solid lightgray;
+  margin: 2px 8px;
+}
