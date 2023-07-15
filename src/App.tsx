@@ -1,13 +1,15 @@
 import { FileTree } from "./FileTree";
 import { Paper } from "@mui/material";
 import "./styles.css";
+import { TreeNode } from "./types";
 
 export default function App() {
   const tree = {
+    id: "root",
     label: "first node",
     expanded: false,
-    children: [{ label: "second", children: [] }],
-  };
+    children: [{ id: "root/second", label: "second", children: [] }],
+  } as TreeNode;
 
   return (
     <div className="App">

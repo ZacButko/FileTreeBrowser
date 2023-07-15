@@ -17,7 +17,6 @@ const FileTreeNodeLabel = ({
 };
 
 export const FileTreeNode = ({ node }: { node: TreeNode }) => {
-  console.log("node?", node);
   if (!node) return null;
   return (
     <div>
@@ -33,7 +32,9 @@ export const FileTreeNode = ({ node }: { node: TreeNode }) => {
           <div className="FTN-Children-Left"></div>
           <div className="FTN-Children-Content">
             <Show condition={!node.children?.length}>
-              <FileTreeNode node={{ label: "Directory is empty" }} />
+              <FileTreeNode
+                node={{ id: "empty-dir", label: "Directory is empty" }}
+              />
             </Show>
             <Show condition={!!node.children?.length}>
               {node.children?.map((child) => (

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { TreeNode } from "../types";
 
-const defaultNode: TreeNode = { label: "root" };
+const defaultNode: TreeNode = { id: "root", label: "root" };
 const FileTreeContext = createContext<{
   tree: TreeNode;
   setTree: Dispatch<SetStateAction<TreeNode>>;
