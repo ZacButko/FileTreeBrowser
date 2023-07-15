@@ -1,6 +1,7 @@
 import { FileTreeNode } from "./FileTreeNode";
+import { TreeNode } from "./types";
 
-export const FileTree = ({ tree }) => {
+export const FileTree = ({ tree }: { tree: TreeNode }) => {
   return (
     <div className="FileTree">
       <h3>File Tree</h3>

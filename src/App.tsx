@@ -13,8 +13,8 @@ export default function App() {
         <FileTree
           tree={{
             label: "first node",
-            expanded: true,
-            children: [{ label: "second", children: [] }]
+            expanded: false,
+            children: [{ label: "second", children: [] }],
           }}
         />
       </Paper>
