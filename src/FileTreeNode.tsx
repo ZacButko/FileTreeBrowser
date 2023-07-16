@@ -1,4 +1,5 @@
 import { Show } from "./Show";
+import { useFileTreeContext } from "./context/FileTreeContext";
 import type { TreeNode } from "./types";
 
 const FileTreeNodeLabel = ({
@@ -17,10 +18,12 @@ const FileTreeNodeLabel = ({
 };
 
 export const FileTreeNode = ({ node }: { node: TreeNode }) => {
+  const { toggleNodeExpanded } = useFileTreeContext();
+  console.log("node", node.id, node);
   if (!node) return null;
   return (
     <div>
-      <div className="FTN-Label">
+      <div className="FTN-Label" onClick={() => toggleNodeExpanded(node.id)}>
         <FileTreeNodeLabel
           directory={!!node.children?.length}
           expanded={!!node.expanded}

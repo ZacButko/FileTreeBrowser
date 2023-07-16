@@ -1,6 +1,14 @@
 import { FileTreeNode } from "./FileTreeNode";
-import { FileTreeContextProvider } from "./context/FileTreeContext";
+import {
+  FileTreeContextProvider,
+  useFileTreeContext,
+} from "./context/FileTreeContext";
 import { TreeNode } from "./types";
+
+const RootNode = () => {
+  const { tree } = useFileTreeContext();
+  return <FileTreeNode node={tree} key={JSON.stringify(tree)} />;
+};
 
 export const FileTree = ({ tree }: { tree: TreeNode }) => {
   return (
@@ -8,7 +16,7 @@ export const FileTree = ({ tree }: { tree: TreeNode }) => {
       <div className="FileTree">
         <h3>File Tree</h3>
         <div className="FT-Nodes">
-          <FileTreeNode node={tree} />
+          <RootNode />
         </div>
       </div>
     </FileTreeContextProvider>
