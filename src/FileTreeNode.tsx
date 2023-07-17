@@ -19,7 +19,6 @@ const FileTreeNodeLabel = ({
 
 export const FileTreeNode = ({ node }: { node: TreeNode }) => {
   const { toggleNodeExpanded } = useFileTreeContext();
-  console.log("node", node.id, node);
   if (!node) return null;
   return (
     <div>
@@ -36,7 +35,14 @@ export const FileTreeNode = ({ node }: { node: TreeNode }) => {
           <div className="FTN-Children-Content">
             <Show condition={!node.children?.length}>
               <FileTreeNode
-                node={{ id: "empty-dir", label: "Directory is empty" }}
+                node={{
+                  id: "empty-dir",
+                  label: "Directory is empty",
+                  parentId: node.id,
+                  childrenIds: [],
+                  expanded: false,
+                  children: [],
+                }}
               />
             </Show>
             <Show condition={!!node.children?.length}>

@@ -4,10 +4,18 @@ import {
   useContext,
   useReducer,
 } from "react";
-import { TreeNode } from "../types";
+import { TreeConstructorData } from "../types";
 import { TreeGraph } from "../class/TreeGraph";
 
-const defaultNode: TreeNode = { id: "root", label: "root", expanded: false };
+const defaultNode: TreeConstructorData = [
+  {
+    id: "root",
+    label: "root",
+    expanded: false,
+    parentId: null,
+    childrenIds: [],
+  },
+];
 
 const fileTreeReducer = (
   state: TreeGraph,
@@ -15,11 +23,8 @@ const fileTreeReducer = (
 ) => {
   switch (action.type) {
     case "toggleNodeExpanded": {
-      console.log("inside toggle");
-
-      state.toggleNode(action.payload.nodeId);
-      console.log("updated state?", state);
-      return new TreeGraph(state.rootNode);
+      const newConstructorData = state.toggleNode(action.payload.nodeId);
+      return new TreeGraph(newConstructorData);
     }
   }
 };
@@ -33,7 +38,7 @@ const FileTreeContext = createContext<{
 const FileTreeContextProvider = ({
   initialTree = defaultNode,
   children,
-}: PropsWithChildren<{ initialTree?: TreeNode }>) => {
+}: PropsWithChildren<{ initialTree?: TreeConstructorData }>) => {
   const [state, dispatch] = useReducer(
     fileTreeReducer,
     new TreeGraph(initialTree)
@@ -41,12 +46,10 @@ const FileTreeContextProvider = ({
 
   const actions = {
     toggleNodeExpanded: (nodeId: string) => {
-      console.log("outside toggle");
       dispatch({ type: "toggleNodeExpanded", payload: { nodeId } });
     },
   };
 
-  console.log("current tree", state);
   return (
     <FileTreeContext.Provider value={{ tree: state, ...actions }}>
       {children}
