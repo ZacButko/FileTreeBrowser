@@ -4,6 +4,7 @@ export interface TreeNode {
   expanded: boolean;
   parentId: null | string;
   childrenIds: Array<string>;
+  isDirectory: boolean;
   children: Array<TreeNode>;
 }
 
@@ -13,6 +14,7 @@ export interface TreeNodeData {
   expanded: boolean;
   parentId: null | string;
   childrenIds: Array<string>;
+  isDirectory: boolean;
 }
 
 export type TreeConstructorData = Array<TreeNodeData>;

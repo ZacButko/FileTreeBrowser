@@ -2,6 +2,13 @@ import { Show } from "./Show";
 import { useFileTreeContext } from "./context/FileTreeContext";
 import type { TreeNode } from "./types";
 
+const leafDefaults = {
+  childrenIds: [],
+  expanded: false,
+  children: [],
+  isDirectory: false,
+};
+
 const FileTreeNodeLabel = ({
   directory,
   expanded,
@@ -22,10 +29,15 @@ export const FileTreeNode = ({ node }: { node: TreeNode }) => {
   if (!node) return null;
   return (
     <div>
-      <div className="FTN-Label" onClick={() => toggleNodeExpanded(node.id)}>
+      <div
+        className="FTN-Label"
+        onClick={() =>
+          node.isDirectory ? toggleNodeExpanded(node.id) : undefined
+        }
+      >
         <FileTreeNodeLabel
-          directory={!!node.children?.length}
-          expanded={!!node.expanded}
+          directory={node.isDirectory}
+          expanded={node.expanded}
         />
         <div className="FTN-Label-Text">{node.label}</div>
       </div>
@@ -39,9 +51,7 @@ export const FileTreeNode = ({ node }: { node: TreeNode }) => {
                   id: "empty-dir",
                   label: "Directory is empty",
                   parentId: node.id,
-                  childrenIds: [],
-                  expanded: false,
-                  children: [],
+                  ...leafDefaults,
                 }}
               />
             </Show>

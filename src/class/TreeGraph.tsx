@@ -24,8 +24,8 @@ export class TreeGraph {
 
   get serializeTree(): TreeConstructorData {
     return this.nodeArray.map((n) => {
-      const { id, label, expanded, parentId, childrenIds } = n;
-      return { id, label, expanded, parentId, childrenIds };
+      const { id, label, expanded, parentId, childrenIds, isDirectory } = n;
+      return { id, label, expanded, parentId, childrenIds, isDirectory };
     });
   }
 

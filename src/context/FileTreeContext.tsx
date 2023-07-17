@@ -14,6 +14,7 @@ const defaultNode: TreeConstructorData = [
     expanded: false,
     parentId: null,
     childrenIds: [],
+    isDirectory: false,
   },
 ];
 

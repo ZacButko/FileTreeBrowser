@@ -9,7 +9,8 @@ const treeData = [
     label: "root node",
     expanded: false,
     parentId: null,
-    childrenIds: ["root/first", "root/second"],
+    childrenIds: ["root/first", "root/second", "root/third"],
+    isDirectory: true,
   },
   {
     id: "root/first",
@@ -17,6 +18,7 @@ const treeData = [
     expanded: false,
     parentId: "root",
     childrenIds: ["root/first/apple", "root/first/banana"],
+    isDirectory: true,
   },
   {
     id: "root/second",
@@ -24,6 +26,7 @@ const treeData = [
     expanded: false,
     parentId: "root",
     childrenIds: [],
+    isDirectory: false,
   },
   {
     id: "root/first/apple",
@@ -31,6 +34,7 @@ const treeData = [
     expanded: false,
     parentId: "root/first",
     childrenIds: [],
+    isDirectory: false,
   },
   {
     id: "root/first/banana",
@@ -38,6 +42,15 @@ const treeData = [
     expanded: false,
     parentId: "root/first",
     childrenIds: [],
+    isDirectory: false,
+  },
+  {
+    id: "root/third",
+    label: "third",
+    expanded: false,
+    parentId: "root",
+    childrenIds: [],
+    isDirectory: true,
   },
 ] as TreeConstructorData;
 
