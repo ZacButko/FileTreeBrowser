@@ -7,7 +7,8 @@ import { TreeNode } from "./types";
 
 const RootNode = () => {
   const { tree } = useFileTreeContext();
-  return <FileTreeNode node={tree} key={JSON.stringify(tree)} />;
+  console.log("TREE", tree.rootNode);
+  return <FileTreeNode node={tree.rootNode} key={JSON.stringify(tree)} />;
 };
 
 export const FileTree = ({ tree }: { tree: TreeNode }) => {

@@ -1,58 +1,49 @@
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useReducer,
-} from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 import { TreeNode } from "../types";
-import { getMapFromTree } from "../util";
+import { useImmerReducer } from "use-immer";
+import { enableMapSet } from "immer";
+import { TreeGraph } from "../class/TreeGraph";
 
-const defaultNode: TreeNode = { id: "root", label: "root" };
+enableMapSet();
 
-interface FileTreeContextState {
-  tree: TreeNode;
-  nodeMap: Map<string, TreeNode>;
-}
+const defaultNode: TreeNode = { id: "root", label: "root", expanded: false };
 
 const fileTreeReducer = (
-  state: FileTreeContextState,
+  draft: TreeGraph,
   action: { type: "toggleNodeExpanded"; payload: { nodeId: string } }
-): FileTreeContextState => {
+) => {
   switch (action.type) {
     case "toggleNodeExpanded": {
-      console.log("toggle", action.payload.nodeId);
-      const node = state.nodeMap.get(action.payload.nodeId);
-      if (node) {
-        node.expanded = true;
-      }
-      console.log("node", node);
-      return { tree: state.tree, nodeMap: state.nodeMap };
+      console.log("inside toggle");
+      return void draft.toggleNode(action.payload.nodeId);
     }
   }
 };
 
 const FileTreeContext = createContext<{
-  tree: TreeNode;
+  tree: TreeGraph;
   toggleNodeExpanded: (n: string) => void;
   // eslint-disable-next-line
-}>({ tree: defaultNode, toggleNodeExpanded: (n) => undefined });
+}>({ tree: new TreeGraph(defaultNode), toggleNodeExpanded: (n) => undefined });
 
 const FileTreeContextProvider = ({
   initialTree = defaultNode,
   children,
 }: PropsWithChildren<{ initialTree?: TreeNode }>) => {
-  const [state, dispatch] = useReducer(fileTreeReducer, {
-    tree: initialTree,
-    nodeMap: getMapFromTree(initialTree),
-  });
+  const [state, dispatch] = useImmerReducer(
+    fileTreeReducer,
+    new TreeGraph(initialTree)
+  );
 
   const actions = {
-    toggleNodeExpanded: (nodeId: string) =>
-      dispatch({ type: "toggleNodeExpanded", payload: { nodeId } }),
+    toggleNodeExpanded: (nodeId: string) => {
+      console.log("outside toggle");
+      dispatch({ type: "toggleNodeExpanded", payload: { nodeId } });
+    },
   };
 
   return (
-    <FileTreeContext.Provider value={{ ...state, ...actions }}>
+    <FileTreeContext.Provider value={{ tree: state, ...actions }}>
       {children}
     </FileTreeContext.Provider>
   );

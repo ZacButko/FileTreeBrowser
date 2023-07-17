@@ -8,7 +8,9 @@ export default function App() {
     id: "root",
     label: "first node",
     expanded: false,
-    children: [{ id: "root/second", label: "second", children: [] }],
+    children: [
+      { id: "root/second", label: "second", expanded: false, children: [] },
+    ],
   } as TreeNode;
 
   return (
