@@ -6,16 +6,37 @@ import "./styles.css";
 const treeData = [
   {
     id: "root",
-    label: "first node",
+    label: "root node",
     expanded: false,
     parentId: null,
-    childrenIds: ["root/second"],
+    childrenIds: ["root/first", "root/second"],
+  },
+  {
+    id: "root/first",
+    label: "first",
+    expanded: false,
+    parentId: "root",
+    childrenIds: ["root/first/apple", "root/first/banana"],
   },
   {
     id: "root/second",
     label: "second",
     expanded: false,
     parentId: "root",
+    childrenIds: [],
+  },
+  {
+    id: "root/first/apple",
+    label: "apple",
+    expanded: false,
+    parentId: "root/first",
+    childrenIds: [],
+  },
+  {
+    id: "root/first/banana",
+    label: "banana",
+    expanded: false,
+    parentId: "root/first",
     childrenIds: [],
   },
 ] as TreeConstructorData;
