@@ -1,21 +1,25 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useReducer,
+} from "react";
 import { TreeNode } from "../types";
-import { useImmerReducer } from "use-immer";
-import { enableMapSet } from "immer";
 import { TreeGraph } from "../class/TreeGraph";
-
-enableMapSet();
 
 const defaultNode: TreeNode = { id: "root", label: "root", expanded: false };
 
 const fileTreeReducer = (
-  draft: TreeGraph,
+  state: TreeGraph,
   action: { type: "toggleNodeExpanded"; payload: { nodeId: string } }
 ) => {
   switch (action.type) {
     case "toggleNodeExpanded": {
       console.log("inside toggle");
-      return void draft.toggleNode(action.payload.nodeId);
+
+      state.toggleNode(action.payload.nodeId);
+      console.log("updated state?", state);
+      return new TreeGraph(state.rootNode);
     }
   }
 };
@@ -30,7 +34,7 @@ const FileTreeContextProvider = ({
   initialTree = defaultNode,
   children,
 }: PropsWithChildren<{ initialTree?: TreeNode }>) => {
-  const [state, dispatch] = useImmerReducer(
+  const [state, dispatch] = useReducer(
     fileTreeReducer,
     new TreeGraph(initialTree)
   );
@@ -42,6 +46,7 @@ const FileTreeContextProvider = ({
     },
   };
 
+  console.log("current tree", state);
   return (
     <FileTreeContext.Provider value={{ tree: state, ...actions }}>
       {children}
